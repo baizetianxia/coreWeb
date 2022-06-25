@@ -4,11 +4,11 @@ import (
 	"log"
 	"time"
 
-	"github.com/baizetianxia/coreWeb/framework"
+	"github.com/baizetianxia/coreWeb/framework/gin"
 )
 
-func Cost() framework.ControllerHandler {
-	return func(c *framework.Context) error {
+func Cost() gin.HandlerFunc {
+	return func(c *gin.Context) {
 		start := time.Now()
 
 		c.Next()
@@ -17,8 +17,7 @@ func Cost() framework.ControllerHandler {
 
 		cost := end.Sub(start)
 
-		log.Panicf("api uri: %v,cost: %v", c.GetRequest().RequestURI, cost.Seconds())
+		log.Panicf("api uri: %v,cost: %v", c.Request.RequestURI, cost.Seconds())
 
-		return nil
 	}
 }

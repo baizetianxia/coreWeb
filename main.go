@@ -8,20 +8,16 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/baizetianxia/coreWeb/framework"
-	"github.com/baizetianxia/coreWeb/framework/middleware"
+	"github.com/baizetianxia/coreWeb/framework/gin"
+	"github.com/baizetianxia/coreWeb/provider/demo"
 )
 
 func main() {
-	core := framework.NewCore()
+	core := gin.New()
+	//绑定服务
+	core.Bind(&demo.DemoServiceProvider{})
 
-	// core.Use(
-	// 	middleware.Test1(),
-	// 	middleware.Test2(),
-	// )
-
-	core.Use(middleware.Recovery())
-	core.Use(middleware.Cost())
+	core.Use(gin.Recovery())
 
 	registerRouter(core)
 
